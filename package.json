@@ -1,0 +1,28 @@
+{
+  "name": "heltblogserver",
+  "version": "1.0.0",
+  "description": "Helt Web Application server to manage server calls to the front end ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "lint": "eslint src/js"
+  },
+  "author": "Michael Agbonyeme",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.2",
+    "helmet": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "nodemon": "^2.0.20"
+  }
+}
