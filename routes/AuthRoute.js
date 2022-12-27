@@ -8,40 +8,40 @@ const { userSignInValidation,
 
 //register a user with middle function to check input errors
 /** @todo - be deleted */
-// router.post("/register", async (req, res) => {
-//     console.log("registering user")
-//     const { name, email, password } = req.body;
+router.post("/register", async (req, res) => {
+    console.log("registering user")
+    const { name, email, password } = req.body;
 
-//     //hash current password sent from client
-//     const hashedPassword = CryptoJS.AES.encrypt(password, process.env.USER_SECRET_KEY);
+    //hash current password sent from client
+    const hashedPassword = CryptoJS.AES.encrypt(password, process.env.USER_SECRET_KEY);
 
-//     try{
-//         //checks for existing user before creating
-//            const existingUser = await User.findOne({email : email});
-//            if(!existingUser){
-//             const newUser = new User({
-//                 name: name,
-//                 email: email,
-//                 password: hashedPassword
-//             })
+    try{
+        //checks for existing user before creating
+           const existingUser = await User.findOne({email : email});
+           if(!existingUser){
+            const newUser = new User({
+                name: name,
+                email: email,
+                password: hashedPassword
+            })
     
-//             //saves user then sends token to be valid until logged out(only for this project)
-//             newUser.save().then(async result => {
-//                 const token = await jwt.sign({
-//                     user_id : result._id,
-//                     role: result.role
-//                 }, process.env.JWT_SECRET_KEY)
+            //saves user then sends token to be valid until logged out(only for this project)
+            newUser.save().then(async result => {
+                const token = await jwt.sign({
+                    user_id : result._id,
+                    role: result.role
+                }, process.env.JWT_SECRET_KEY)
     
-//                 res.status(200).json({auth: true, token: token})
-//             }).catch(error => res.status(500).json({error: error}))
-//         } else {
-//             res.status(409).json({error: "This user already exists"});
-//         }
-//     }catch(err){
-//         res.status(500).json({error: err})
-//     }  
+                res.status(200).json({auth: true, token: token})
+            }).catch(error => res.status(500).json({error: error}))
+        } else {
+            res.status(409).json({error: "This user already exists"});
+        }
+    }catch(err){
+        res.status(500).json({error: err})
+    }  
 
-// })
+})
 
     //logs in a user with middle function to check input errors
 
@@ -67,8 +67,9 @@ router.post("/login", userSignInValidation(), validateSignIn, async (req, res) =
             } else {
                 const token = await jwt.sign({
                     user_id : user._id,
-                    role: user.role
-                }, process.env.JWT_SECRET_KEY)
+                    role: user.role,
+                }, process.env.JWT_SECRET_KEY,
+                {expiresIn: "30m"})
 
                 res.status(200).json({auth: true, token: token});
             }
