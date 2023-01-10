@@ -24,6 +24,14 @@ router.post("/create", authenticateUser, async(req, res) => {
         
         let { title, body, image, author } = req.body;
 
+        if(!title){
+            title = "Helt Article";   
+        }
+        
+        if(!image){
+            image = "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80";
+        }
+        
         if(!author){
             author = "Helt Staff";
         }
@@ -64,6 +72,14 @@ router.get("/:id", async (req, res) => {
 router.put("/:id/update", authenticateUser, async (req, res) => {
     try{
         const { title, body, image, author } = req.body;
+        
+        if(!title){
+            title = "Helt Article";   
+        }
+        
+        if(!image){
+            image = "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80";
+        }
 
 
         await Blog.findByIdAndUpdate(req.params.id, {
